@@ -47,6 +47,10 @@ function loadFriendProfiles() {
 	Object.keys(client.myFriends).forEach((sid) => {
 		loadProfile(sid)
 	})
+	
+	setTimeout(() => {
+		loadFriendProfiles()
+	}, 1000 * client.myFriends.length)
 }
 
 client.on('loggedOn', function (details) {
@@ -137,9 +141,6 @@ csgo.on('connectedToGC', function () {
 	log("STATUS", "Connected to GC")
 
 	loadFriendProfiles()
-	setInterval(() => {
-		loadFriendProfiles()
-	}, config.refreshInterval)
 })
 
 csgo.on('disconnectedFromGC', function (reason) {
